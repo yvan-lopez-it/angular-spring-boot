@@ -20,9 +20,9 @@ public class Cliente implements Serializable {
     private String apellido;
     private String email;
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
-    private Date createAt;
+    private Date createdAt;
 
     @Serial
     private static final long serialVersionUID = 1L;
