@@ -11,3 +11,15 @@ INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Segundo', 'Cer
 INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Ricardo', 'Oviedo', 'ricardo@mail.com', '2014-04-12');
 INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Jose', 'Guanilo', 'jose@mail.com', '2013-03-11');
 INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Luis', 'Carrasco', 'luis@mail.com', '2012-02-10');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Roberto', 'Gomez', 'user1@mail.com', '2007-01-19');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Mery', 'Xmas', 'user2@mail.com', '2006-01-19');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Raul', 'Romero', 'user3@mail.com', '2005-11-20');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Edinson', 'Flores', 'user4@mail.com', '2006-10-18');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Malena', 'Diaz', 'user5@mail.com', '2004-09-17');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Eva', 'Longoria', 'user6@mail.com', '2003-08-16');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Antonia', 'Nieves', 'user7@mail.com', '2008-07-15');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Glicerio', 'Tamayo', 'user8@mail.com', '2001-06-14');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Manuel', 'Bell', 'user9@mail.com', '1982-05-13');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Cesar', 'Lomas', 'user10@mail.com', '1985-04-12');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Sergio', 'Ramirez', 'user11@mail.com', '1952-03-11');
+INSERT INTO clientes(nombre, apellido, email, created_at) VALUES('Leoncio', 'Villa', 'user12@mail.com', '1981-02-10');
