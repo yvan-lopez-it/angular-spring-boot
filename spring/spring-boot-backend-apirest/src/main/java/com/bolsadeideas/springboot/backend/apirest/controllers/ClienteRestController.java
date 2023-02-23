@@ -94,7 +94,7 @@ public class ClienteRestController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        response.put("mensaje", "El cliente ha sido creado con éxito!");
+        response.put("mensaje", "El cliente ha sido actualizado con éxito!");
         response.put("cliente", clienteUpdated);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -102,7 +102,6 @@ public class ClienteRestController {
     }
 
     @DeleteMapping("/clientes/{id}")
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> delete(@PathVariable Long id) {
 
         Map<String, Object> response = new HashMap<>();
