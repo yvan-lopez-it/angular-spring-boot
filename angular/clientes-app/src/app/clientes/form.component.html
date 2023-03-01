@@ -1,3 +1,10 @@
+<ul class="alert alert-danger"
+    *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
 <div class="card bg-dark text-white">
 
   <div class="card-header">{{ titulo }}</div>
@@ -9,7 +16,7 @@
       <div class="col-sm-6">
         <input #nombre="ngModel"
                [(ngModel)]="cliente.nombre"
-               type="text" class="form-control" name="nombre" required minlength="4"/>
+               type="text" class="form-control" name="nombre"/>
         <div class="alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
           <div *ngIf="nombre.errors.required">
             El nombre es requerido
@@ -26,7 +33,7 @@
       <div class="col-sm-6">
         <input #apellido="ngModel"
                [(ngModel)]="cliente.apellido"
-               type="text" class="form-control" name="apellido" required/>
+               type="text" class="form-control" name="apellido"/>
         <div class="alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
           <div *ngIf="apellido.errors.required">
             El apellido es requerido
@@ -40,7 +47,7 @@
       <label for="email" class="col-form-label col-sm-2">email</label>
       <div class="col-sm-6">
         <input [(ngModel)]="cliente.email" #email="ngModel"
-               type="text" class="form-control" name="email" required email/>
+               type="text" class="form-control" name="email"/>
         <div class="alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
           <div *ngIf="email.errors.required">
             El e-mail es requerido
