@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatDate, DatePipe } from "@angular/common";
 import { Cliente } from "./cliente";
 import { Observable, catchError, throwError, map } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -18,7 +19,25 @@ export class ClienteService {
   }
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.urlEndPoint);
+    return this.http.get(this.urlEndPoint)
+      .pipe(
+        map(response => {
+          let clientes = response as Cliente[]
+          return clientes.map(cliente => {
+            cliente.nombre = cliente.nombre.toUpperCase();
+
+            //cliente.createdAt = formatDate(cliente.createdAt, 'dd-MM-yyyy', 'en-US');
+
+
+            let datePipe = new DatePipe('es');
+            //cliente.createdAt = datePipe.transform(cliente.createdAt, 'dd/MM/yyyy');
+            cliente.createdAt = datePipe.transform(cliente.createdAt, 'EEE. dd, MMM yyyy');
+            //cliente.createdAt = datePipe.transform(cliente.createdAt, 'fullDate');
+
+            return cliente;
+          });
+        })
+      );
   }
 
   create(cliente: Cliente): Observable<Cliente> {
@@ -36,37 +55,40 @@ export class ClienteService {
   }
 
   getCliente(id): Observable<Cliente> {
-    return this.http.get<Cliente>(`${ this.urlEndPoint }/${ id }`).pipe(
-      catchError(e => {
-        this.router.navigate([ '/clientes' ]);
-        console.error(e.error.mensaje);
-        swal.fire('Error al editar', e.error.mensaje, 'error');
-        return throwError(() => e);
-      })
-    );
+    return this.http.get<Cliente>(`${ this.urlEndPoint }/${ id }`)
+      .pipe(
+        catchError(e => {
+          this.router.navigate([ '/clientes' ]);
+          console.error(e.error.mensaje);
+          swal.fire('Error al editar', e.error.mensaje, 'error');
+          return throwError(() => e);
+        })
+      );
   }
 
   update(cliente: Cliente): Observable<any> {
-    return this.http.put<any>(`${ this.urlEndPoint }/${ cliente.id }`, cliente, { headers: this.httpHeaders }).pipe(
-      catchError(e => {
-        if (e.status == 400) {
+    return this.http.put<any>(`${ this.urlEndPoint }/${ cliente.id }`, cliente, { headers: this.httpHeaders })
+      .pipe(
+        catchError(e => {
+          if (e.status == 400) {
+            return throwError(() => e);
+          }
+          console.error(e.error.mensaje);
+          swal.fire(e.error.mensaje, e.error.error, 'error');
           return throwError(() => e);
-        }
-        console.error(e.error.mensaje);
-        swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(() => e);
-      })
-    );
+        })
+      );
   }
 
   delete(id: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`${ this.urlEndPoint }/${ id }`, { headers: this.httpHeaders }).pipe(
-      catchError(e => {
-        console.error(e.error.mensaje);
-        swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(() => e);
-      })
-    );
+    return this.http.delete<Cliente>(`${ this.urlEndPoint }/${ id }`, { headers: this.httpHeaders })
+      .pipe(
+        catchError(e => {
+          console.error(e.error.mensaje);
+          swal.fire(e.error.mensaje, e.error.error, 'error');
+          return throwError(() => e);
+        })
+      );
   }
 
 }
