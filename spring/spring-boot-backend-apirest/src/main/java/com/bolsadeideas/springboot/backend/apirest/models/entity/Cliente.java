@@ -3,6 +3,7 @@ package com.bolsadeideas.springboot.backend.apirest.models.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -33,14 +34,15 @@ public class Cliente implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull(message = "No fecha no puede estar vacia")
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
     private Date createdAt;
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = new Date();
-    }
+//    @PrePersist
+//    public void prePersist() {
+//        createdAt = new Date();
+//    }
 
     @Serial
     private static final long serialVersionUID = 1L;
