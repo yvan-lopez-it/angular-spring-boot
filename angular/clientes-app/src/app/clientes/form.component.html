@@ -66,12 +66,18 @@
     <div class="form-group row">
       <label for="createdAt" class="col-form-label col-sm-2">Fecha</label>
       <div class="col-sm-6">
-        <input type="date" class="form-control" name="createdAt"
-               [(ngModel)]="cliente.createdAt"/>
+
+        <input class="form-control" name="createdAt" style="display: inline; width: 300px"
+               [matDatepicker]="miDatePicker"
+               [(ngModel)]="cliente.createdAt"
+        />
+        <mat-datepicker-toggle [for]="miDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #miDatePicker></mat-datepicker>
       </div>
     </div>
 
 
+    <!--    boton crear-->
     <div class="form-group row">
       <div class="col-sm-6">
         <button class="btn btn-primary" role="button"
