@@ -44,6 +44,8 @@ public class Cliente implements Serializable {
 //        createdAt = new Date();
 //    }
 
+    private String foto;
+
     @Serial
     private static final long serialVersionUID = 1L;
 }
