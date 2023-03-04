@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from "./cliente";
+import { ClienteModel } from "../../models/cliente.model";
 
-import { ClienteService } from "./cliente.service";
+import { ClienteService } from "../../services/cliente.service";
 import Swal from "sweetalert2";
 import { tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { ModalService } from "./detalle/modal.service";
+import { ModalService } from "../../services/modal.service";
 
 @Component({
   selector: 'app-clientes',
@@ -13,9 +13,9 @@ import { ModalService } from "./detalle/modal.service";
 })
 export class ClientesComponent implements OnInit {
 
-  clientes: Cliente[];
+  clientes: ClienteModel[];
   paginador: any;
-  clienteSeleccionado: Cliente;
+  clienteSeleccionado: ClienteModel;
 
   constructor(private clienteService: ClienteService,
               private modalService: ModalService,
@@ -34,10 +34,10 @@ export class ClientesComponent implements OnInit {
             //tap(clientes => this.clientes = clientes)
             tap(response => {
               console.log("ClientesComponent: tap 3");
-              (response.content as Cliente[]).forEach(cliente => console.log(cliente.nombre));
+              (response.content as ClienteModel[]).forEach(cliente => console.log(cliente.nombre));
             })
           ).subscribe(response => {
-            this.clientes = response.content as Cliente[];
+            this.clientes = response.content as ClienteModel[];
             this.paginador = response;
           }); //subscribe();
         }
@@ -54,7 +54,7 @@ export class ClientesComponent implements OnInit {
 
   }
 
-  delete(cliente: Cliente): void {
+  delete(cliente: ClienteModel): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -77,7 +77,7 @@ export class ClientesComponent implements OnInit {
           response => {
             this.clientes = this.clientes.filter(cli => cli != cliente);
             swalWithBootstrapButtons.fire(
-              '¡Cliente eliminado!',
+              '¡ClienteModel eliminado!',
               `Cliente ${ cliente.nombre } eliminado con éxito`,
               'success'
             )
@@ -87,7 +87,7 @@ export class ClientesComponent implements OnInit {
     })
   }
 
-  abrirModal(cliente: Cliente) {
+  abrirModal(cliente: ClienteModel) {
     this.clienteSeleccionado = cliente;
     this.modalService.abrirModal();
   }

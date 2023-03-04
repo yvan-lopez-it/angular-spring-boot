@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Cliente } from "../cliente";
-import { ClienteService } from "../cliente.service";
+import { ClienteModel } from "../../../models/cliente.model";
+import { ClienteService } from "../../../services/cliente.service";
 import swal from "sweetalert2";
 import { HttpEventType } from "@angular/common/http";
-import { ModalService } from "./modal.service";
+import { ModalService } from "../../../services/modal.service";
 
 @Component({
   selector: 'detalle-cliente',
@@ -11,7 +11,7 @@ import { ModalService } from "./modal.service";
   styleUrls: [ './detalle.component.css' ]
 })
 export class DetalleComponent implements OnInit {
-  @Input() cliente: Cliente;
+  @Input() cliente: ClienteModel;
   titulo: string = "Detalle del cliente";
   fotoSeleccionada: File;
   progreso: number = 0;
@@ -44,7 +44,7 @@ export class DetalleComponent implements OnInit {
             this.progreso = Math.round((event.loaded / event.total) * 100);
           } else if (event.type === HttpEventType.Response) {
             let response: any = event.body;
-            this.cliente = response.cliente as Cliente;
+            this.cliente = response.cliente as ClienteModel;
 
             this.modalService.notificarUpload.emit(this.cliente);
 
