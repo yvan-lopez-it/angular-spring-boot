@@ -1,16 +1,27 @@
 package com.bolsadeideas.springboot.backend.apirest.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Entity;
 
 @Data
 @Entity
@@ -53,7 +64,6 @@ public class Cliente implements Serializable {
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   private Region region;
 
-  @Serial
   private static final long serialVersionUID = 1L;
 }
 

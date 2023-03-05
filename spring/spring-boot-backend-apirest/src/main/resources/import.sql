@@ -1,5 +1,4 @@
 -- Populate tabla clientes
-
 INSERT INTO regiones(id, nombre) VALUES (1,'Sudamérica');
 INSERT INTO regiones(id, nombre) VALUES (2,'Centroamérica');
 INSERT INTO regiones(id, nombre) VALUES (3,'Norteamérica');
@@ -33,3 +32,14 @@ INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(5,'M
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(6,'Cesar', 'Lomas', 'user10@mail.com', '1985-04-12');
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(7,'Sergio', 'Ramirez', 'user11@mail.com', '1952-03-11');
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(8,'Leoncio', 'Villa', 'user12@mail.com', '1981-02-10');
+
+-- Creamos algunos usuarios con sus roles
+INSERT INTO usuarios(username, password, enabled) VALUES('yvan', '$2a$10$D.fuTL1dmViVstbWlHEnQeMzQZucVscPE9NXth37UPVXggELRZr8e', 1)
+INSERT INTO usuarios(username, password, enabled) VALUES('admin', '$2a$10$X9SGazzekxK5VIwz4GefWOHivnPeSL/HXjcnKeEeFMz5l61vyV4Ha', 1)
+
+INSERT INTO roles(nombre) VALUES('ROLE_USER')
+INSERT INTO roles(nombre) VALUES('ROLE_ADMIN')
+
+INSERT INTO usuarios_roles(usuario_id, role_id) VALUES(1, 1);
+INSERT INTO usuarios_roles(usuario_id, role_id) VALUES(2, 2);
+INSERT INTO usuarios_roles(usuario_id, role_id) VALUES(2, 1);
