@@ -39,206 +39,206 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class ClienteRestController {
 
-  private final IClienteService clienteService;
+    private final IClienteService clienteService;
 
-  private final IUploadFileService uploadFileService;
+    private final IUploadFileService uploadFileService;
 
-  @Autowired
-  public ClienteRestController(IClienteService clienteService, IUploadFileService uploadFileService) {
-    this.clienteService = clienteService;
-    this.uploadFileService = uploadFileService;
-  }
-
-  @GetMapping("/clientes")
-  public List<Cliente> index() {
-    return clienteService.findAll();
-  }
-
-  @GetMapping("/clientes/page/{page}")
-  public Page<Cliente> index(@PathVariable Integer page) {
-    Pageable pageable = PageRequest.of(page, 4);
-    return clienteService.findAll(pageable);
-  }
-
-  @GetMapping("/clientes/{id}")
-  public ResponseEntity<?> show(@PathVariable Long id) {
-
-    Cliente cliente = null;
-    Map<String, Object> response = new HashMap<>();
-
-    try {
-      cliente = clienteService.findById(id);
-    } catch (DataAccessException dae) {
-      response.put("mensaje", "Error al realizar la consulta en la base de datos");
-      response.put("error",
-          dae.getMessage().concat(": ").concat(dae.getMostSpecificCause().getMessage()));
-      return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    @Autowired
+    public ClienteRestController(IClienteService clienteService, IUploadFileService uploadFileService) {
+        this.clienteService = clienteService;
+        this.uploadFileService = uploadFileService;
     }
 
-    if (cliente == null) {
-      response.put("mensaje",
-          "El cliente ID: ".concat(id.toString()).concat(" no existe en la base de datos!"));
-      return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    @GetMapping("/clientes")
+    public List<Cliente> index() {
+        return clienteService.findAll();
     }
 
-    return new ResponseEntity<>(cliente, HttpStatus.OK);
-  }
-
-  @PostMapping("/clientes")
-  public ResponseEntity<?> create(@Valid @RequestBody Cliente cliente, BindingResult result) {
-    Cliente clienteNew = null;
-    Map<String, Object> response = new HashMap<>();
-
-    if (result.hasErrors()) {
-      List<String> errors = result.getFieldErrors()
-          .stream()
-          .map(e -> "El campo '" + e.getField() + "' " + Objects.requireNonNull(
-              e.getDefaultMessage()))
-          .collect(Collectors.toList());
-
-      response.put("errors", errors);
-      return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    @GetMapping("/clientes/page/{page}")
+    public Page<Cliente> index(@PathVariable Integer page) {
+        Pageable pageable = PageRequest.of(page, 4);
+        return clienteService.findAll(pageable);
     }
 
-    try {
-      clienteNew = clienteService.save(cliente);
-    } catch (DataAccessException dae) {
-      response.put("mensaje", "Error al realizar el insert en la base de datos");
-      response.put("error",
-          dae.getMessage().concat(": ").concat(dae.getMostSpecificCause().getMessage()));
-      return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    @GetMapping("/clientes/{id}")
+    public ResponseEntity<?> show(@PathVariable Long id) {
+
+        Cliente cliente = null;
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            cliente = clienteService.findById(id);
+        } catch (DataAccessException dae) {
+            response.put("mensaje", "Error al realizar la consulta en la base de datos");
+            response.put("error",
+                Objects.requireNonNull(dae.getMessage()).concat(": ").concat(dae.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        if (cliente == null) {
+            response.put("mensaje",
+                "El cliente ID: ".concat(id.toString()).concat(" no existe en la base de datos!"));
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
-    response.put("mensaje", "El cliente ha sido creado con éxito!");
-    response.put("cliente", clienteNew);
+    @PostMapping("/clientes")
+    public ResponseEntity<?> create(@Valid @RequestBody Cliente cliente, BindingResult result) {
+        Cliente clienteNew = null;
+        Map<String, Object> response = new HashMap<>();
 
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
-  }
+        if (result.hasErrors()) {
+            List<String> errors = result.getFieldErrors()
+                .stream()
+                .map(e -> "El campo '" + e.getField() + "' " + Objects.requireNonNull(
+                    e.getDefaultMessage()))
+                .collect(Collectors.toList());
 
-  @PutMapping("/clientes/{id}")
-  public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, BindingResult result,
-      @PathVariable Long id) {
-    Cliente clienteActual = clienteService.findById(id);
-    Cliente clienteUpdated = null;
+            response.put("errors", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
 
-    Map<String, Object> response = new HashMap<>();
+        try {
+            clienteNew = clienteService.save(cliente);
+        } catch (DataAccessException dae) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error",
+                dae.getMessage().concat(": ").concat(dae.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-    if (result.hasErrors()) {
-      List<String> errors = result.getFieldErrors()
-          .stream()
-          .map(e -> "El campo '" + e.getField() + "' " + Objects.requireNonNull(
-              e.getDefaultMessage()))
-          .collect(Collectors.toList());
+        response.put("mensaje", "El cliente ha sido creado con éxito!");
+        response.put("cliente", clienteNew);
 
-      response.put("errors", errors);
-      return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    if (clienteActual == null) {
-      response.put("mensaje", "Error: No se pudo editar. El cliente ID: "
-          .concat(id.toString())
-          .concat(" no existe en la base de datos!"));
-      return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    @PutMapping("/clientes/{id}")
+    public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, BindingResult result,
+        @PathVariable Long id) {
+        Cliente clienteActual = clienteService.findById(id);
+        Cliente clienteUpdated = null;
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (result.hasErrors()) {
+            List<String> errors = result.getFieldErrors()
+                .stream()
+                .map(e -> "El campo '" + e.getField() + "' " + Objects.requireNonNull(
+                    e.getDefaultMessage()))
+                .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        if (clienteActual == null) {
+            response.put("mensaje", "Error: No se pudo editar. El cliente ID: "
+                .concat(id.toString())
+                .concat(" no existe en la base de datos!"));
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
+        try {
+            clienteActual.setApellido(cliente.getApellido());
+            clienteActual.setNombre(cliente.getNombre());
+            clienteActual.setEmail(cliente.getEmail());
+            clienteActual.setRegion(cliente.getRegion());
+
+            clienteUpdated = clienteService.save(clienteActual);
+
+        } catch (DataAccessException dae) {
+            response.put("mensaje", "Error al actualizar el insert en la base de datos");
+            response.put("error", dae.getMessage()
+                .concat(": ")
+                .concat(dae.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El cliente ha sido actualizado con éxito!");
+        response.put("cliente", clienteUpdated);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+
     }
 
-    try {
-      clienteActual.setApellido(cliente.getApellido());
-      clienteActual.setNombre(cliente.getNombre());
-      clienteActual.setEmail(cliente.getEmail());
-      clienteActual.setRegion(cliente.getRegion());
+    @DeleteMapping("/clientes/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
 
-      clienteUpdated = clienteService.save(clienteActual);
+        Map<String, Object> response = new HashMap<>();
 
-    } catch (DataAccessException dae) {
-      response.put("mensaje", "Error al actualizar el insert en la base de datos");
-      response.put("error", dae.getMessage()
-          .concat(": ")
-          .concat(dae.getMostSpecificCause().getMessage()));
-      return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            Cliente cliente = clienteService.findById(id);
+            String nombreFotoAnterior = cliente.getFoto();
+
+            uploadFileService.eliminar(nombreFotoAnterior);
+
+            clienteService.delete(id);
+        } catch (DataAccessException dae) {
+            response.put("mensaje", "Error al eliminar el cliente de la base de datos");
+            response.put("error", Objects.requireNonNull(dae.getMessage())
+                .concat(": ")
+                .concat(dae.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El cliente ha sido eliminado con éxito!");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    response.put("mensaje", "El cliente ha sido actualizado con éxito!");
-    response.put("cliente", clienteUpdated);
+    @PostMapping("/clientes/upload")
+    public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo,
+        @RequestParam("id") Long id) {
+        Map<String, Object> response = new HashMap<>();
 
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
+        Cliente cliente = clienteService.findById(id);
+        if (!archivo.isEmpty()) {
+            String nombreArchivo = null;
+            try {
+                nombreArchivo = uploadFileService.copiar(archivo);
+            } catch (IOException e) {
+                response.put("mensaje", "Error al subir la imagen del cliente.");
+                response.put("error", e.getMessage()
+                    .concat(": ")
+                    .concat(e.getCause().getMessage()));
+                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-  }
+            String nombreFotoAnterior = cliente.getFoto();
+            uploadFileService.eliminar(nombreFotoAnterior);
 
-  @DeleteMapping("/clientes/{id}")
-  public ResponseEntity<?> delete(@PathVariable Long id) {
+            cliente.setFoto(nombreArchivo);
+            clienteService.save(cliente);
 
-    Map<String, Object> response = new HashMap<>();
+            response.put("cliente", cliente);
+            response.put("mensaje", "Ha subido correctamente la imagen: " + nombreArchivo);
+        }
 
-    try {
-      Cliente cliente = clienteService.findById(id);
-      String nombreFotoAnterior = cliente.getFoto();
-
-      uploadFileService.eliminar(nombreFotoAnterior);
-
-      clienteService.delete(id);
-    } catch (DataAccessException dae) {
-      response.put("mensaje", "Error al eliminar el cliente de la base de datos");
-      response.put("error", dae.getMessage()
-          .concat(": ")
-          .concat(dae.getMostSpecificCause().getMessage()));
-      return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    response.put("mensaje", "El cliente ha sido eliminado con éxito!");
+    @GetMapping("/uploads/img/{nombreFoto:.+}")
+    public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
+        Resource recurso = null;
+        try {
+            recurso = uploadFileService.cargar(nombreFoto);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
+        HttpHeaders cabecera = new HttpHeaders();
+        assert recurso != null;
+        cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
 
-  @PostMapping("/clientes/upload")
-  public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo,
-      @RequestParam("id") Long id) {
-    Map<String, Object> response = new HashMap<>();
-
-    Cliente cliente = clienteService.findById(id);
-    if (!archivo.isEmpty()) {
-      String nombreArchivo = null;
-      try {
-        nombreArchivo = uploadFileService.copiar(archivo);
-      } catch (IOException e) {
-        response.put("mensaje", "Error al subir la imagen del cliente.");
-        response.put("error", e.getMessage()
-            .concat(": ")
-            .concat(e.getCause().getMessage()));
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-
-      String nombreFotoAnterior = cliente.getFoto();
-      uploadFileService.eliminar(nombreFotoAnterior);
-
-      cliente.setFoto(nombreArchivo);
-      clienteService.save(cliente);
-
-      response.put("cliente", cliente);
-      response.put("mensaje", "Ha subido correctamente la imagen: " + nombreArchivo);
+        return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
     }
 
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
-  }
-
-  @GetMapping("/uploads/img/{nombreFoto:.+}")
-  public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
-    Resource recurso = null;
-    try {
-      recurso = uploadFileService.cargar(nombreFoto);
-    } catch (MalformedURLException e) {
-      e.printStackTrace();
+    @GetMapping("/clientes/regiones")
+    public List<Region> listarRegiones() {
+        return clienteService.findAllRegiones();
     }
-
-    HttpHeaders cabecera = new HttpHeaders();
-    assert recurso != null;
-    cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
-
-    return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
-  }
-
-  @GetMapping("/clientes/regiones")
-  public List<Region> listarRegiones() {
-    return clienteService.findAllRegiones();
-  }
 
 }

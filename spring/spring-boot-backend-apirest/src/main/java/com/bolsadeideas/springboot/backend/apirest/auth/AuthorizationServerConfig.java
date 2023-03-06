@@ -1,7 +1,10 @@
 package com.bolsadeideas.springboot.backend.apirest.auth;
 
 import static com.bolsadeideas.springboot.backend.apirest.auth.JwtConfig.LLAVE_SECRETA;
+import static com.bolsadeideas.springboot.backend.apirest.auth.JwtConfig.RSA_PRIVADA;
+import static com.bolsadeideas.springboot.backend.apirest.auth.JwtConfig.RSA_PUBLICA;
 
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
@@ -26,6 +30,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     @Qualifier("authenticationManager")
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private InfoAdicionalToken infoAdicionalToken;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -47,10 +54,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken, accessTokenConverter()));
+
         endpoints
             .authenticationManager(authenticationManager)
             .tokenStore(tokenStore())
-            .accessTokenConverter(accessTokenConverter());
+            .accessTokenConverter(accessTokenConverter())
+            .tokenEnhancer(tokenEnhancerChain);
     }
 
     @Bean
@@ -61,7 +72,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey(LLAVE_SECRETA);
+        jwtAccessTokenConverter.setSigningKey(RSA_PRIVADA);
+        jwtAccessTokenConverter.setVerifierKey(RSA_PUBLICA);
         return jwtAccessTokenConverter;
     }
 }

@@ -34,8 +34,8 @@ INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(7,'S
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(8,'Leoncio', 'Villa', 'user12@mail.com', '1981-02-10');
 
 -- Creamos algunos usuarios con sus roles
-INSERT INTO usuarios(username, password, enabled) VALUES('yvan', '$2a$10$D.fuTL1dmViVstbWlHEnQeMzQZucVscPE9NXth37UPVXggELRZr8e', 1)
-INSERT INTO usuarios(username, password, enabled) VALUES('admin', '$2a$10$X9SGazzekxK5VIwz4GefWOHivnPeSL/HXjcnKeEeFMz5l61vyV4Ha', 1)
+INSERT INTO usuarios(username, password, enabled, nombre, apellido, email) VALUES('yvan', '$2a$10$D.fuTL1dmViVstbWlHEnQeMzQZucVscPE9NXth37UPVXggELRZr8e', 1, 'Yvan', 'Lopez', 'yvancho@mail.com')
+INSERT INTO usuarios(username, password, enabled, nombre, apellido, email) VALUES('admin', '$2a$10$X9SGazzekxK5VIwz4GefWOHivnPeSL/HXjcnKeEeFMz5l61vyV4Ha', 1, 'Maritza', 'Tiburcio', 'yvancho@mail.com')
 
 INSERT INTO roles(nombre) VALUES('ROLE_USER')
 INSERT INTO roles(nombre) VALUES('ROLE_ADMIN')

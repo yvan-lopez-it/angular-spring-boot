@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -32,6 +35,22 @@ public class Usuario implements Serializable {
     private String password;
 
     private Boolean enabled;
+
+//    @NotEmpty(message = "No puede estar vacio")
+//    @Size(min = 4, max = 12, message = "El tamaño tiene que estar entre 4 y 12 caracteres")
+//    @Column(nullable = false)
+    private String nombre;
+
+//    @NotEmpty(message = "No puede estar vacío")
+//    @Column(nullable = false)
+    private String apellido;
+
+//    @Email(message = "No es una dirección de correo bien formada.")
+//    @NotEmpty(message = "No puede estar vacio")
+    @Column(unique = true)
+    private String email;
+
+
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "usuarios_roles",
