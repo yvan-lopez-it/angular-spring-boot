@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { formatDate, DatePipe } from "@angular/common";
 import { ClienteModel } from "../models/cliente.model";
 import { Observable, catchError, throwError, map, tap } from "rxjs";
-import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from "@angular/common/http";
-import swal from "sweetalert2";
+import { HttpClient, HttpEvent, HttpRequest } from "@angular/common/http";
+
 import { Router } from "@angular/router";
 import { RegionModel } from "../models/region.model";
 
@@ -14,7 +14,6 @@ import { RegionModel } from "../models/region.model";
 export class ClienteService {
 
   private urlEndPoint: string = 'http://localhost:8080/api/clientes';
-  private httpHeaders: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -55,14 +54,16 @@ export class ClienteService {
   }
 
   create(cliente: ClienteModel): Observable<ClienteModel> {
-    return this.http.post(this.urlEndPoint, cliente, { headers: this.httpHeaders }).pipe(
+    return this.http.post(this.urlEndPoint, cliente).pipe(
       map((response: any) => response.cliente as ClienteModel),
       catchError(e => {
+
         if (e.status == 400) {
           return throwError(() => e);
         }
-        console.error(e.error.mensaje);
-        swal.fire(e.error.mensaje, e.error.error, 'error');
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
         return throwError(() => e);
       })
     );
@@ -72,34 +73,42 @@ export class ClienteService {
     return this.http.get<ClienteModel>(`${ this.urlEndPoint }/${ id }`)
       .pipe(
         catchError(e => {
-          this.router.navigate([ '/clientes' ]);
-          console.error(e.error.mensaje);
-          swal.fire('Error al editar', e.error.mensaje, 'error');
+
+          if (e.status != 401 && e.error.mensaje) {
+            this.router.navigate([ '/clientes' ]);
+            console.error(e.error.mensaje);
+          }
+
           return throwError(() => e);
         })
       );
   }
 
   update(cliente: ClienteModel): Observable<any> {
-    return this.http.put<any>(`${ this.urlEndPoint }/${ cliente.id }`, cliente, { headers: this.httpHeaders })
+    return this.http.put<any>(`${ this.urlEndPoint }/${ cliente.id }`, cliente)
       .pipe(
         catchError(e => {
+
           if (e.status == 400) {
             return throwError(() => e);
           }
-          console.error(e.error.mensaje);
-          swal.fire(e.error.mensaje, e.error.error, 'error');
+          if (e.error.mensaje) {
+            console.error(e.error.mensaje);
+          }
+
           return throwError(() => e);
         })
       );
   }
 
   delete(id: number): Observable<ClienteModel> {
-    return this.http.delete<ClienteModel>(`${ this.urlEndPoint }/${ id }`, { headers: this.httpHeaders })
+    return this.http.delete<ClienteModel>(`${ this.urlEndPoint }/${ id }`)
       .pipe(
         catchError(e => {
-          console.error(e.error.mensaje);
-          swal.fire(e.error.mensaje, e.error.error, 'error');
+          if (e.error.mensaje) {
+            console.error(e.error.mensaje);
+          }
+
           return throwError(() => e);
         })
       );
@@ -112,20 +121,11 @@ export class ClienteService {
     formData.append("id", id);
 
     const req = new HttpRequest('POST', `${ this.urlEndPoint }/upload`, formData, {
-      reportProgress: true
+      reportProgress: true,
+      // headers: httpHeaders,
     });
 
     return this.http.request(req);
-
-    //return this.http.post(`${this.urlEndPoint}/upload`, formData)
-    // .pipe(
-    //     map((response: any) => response.cliente as ClienteModel),
-    //     catchError(e => {
-    //       console.error(e.error.mensaje);
-    //       swal.fire(e.error.mensaje, e.error.error, 'error');
-    //       return throwError(() => e);
-    //     })
-    //   );
 
   }
 

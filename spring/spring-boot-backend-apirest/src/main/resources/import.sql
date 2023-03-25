@@ -34,12 +34,34 @@ INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(7,'S
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(8,'Leoncio', 'Villa', 'user12@mail.com', '1981-02-10');
 
 -- Creamos algunos usuarios con sus roles
-INSERT INTO usuarios(username, password, enabled, nombre, apellido, email) VALUES('yvan', '$2a$10$D.fuTL1dmViVstbWlHEnQeMzQZucVscPE9NXth37UPVXggELRZr8e', 1, 'Yvan', 'Lopez', 'yvancho@mail.com')
-INSERT INTO usuarios(username, password, enabled, nombre, apellido, email) VALUES('admin', '$2a$10$X9SGazzekxK5VIwz4GefWOHivnPeSL/HXjcnKeEeFMz5l61vyV4Ha', 1, 'Maritza', 'Tiburcio', 'yvancho@mail.com')
+INSERT INTO usuarios(username, password, enabled, nombre, apellido, email) VALUES('admin', '$2a$10$D.fuTL1dmViVstbWlHEnQeMzQZucVscPE9NXth37UPVXggELRZr8e', 1, 'Yvan', 'Lopez', 'yvancho@mail.com')
+INSERT INTO usuarios(username, password, enabled, nombre, apellido, email) VALUES('user', '$2a$10$X9SGazzekxK5VIwz4GefWOHivnPeSL/HXjcnKeEeFMz5l61vyV4Ha', 1, 'Benjamin', 'Lopez', 'benji@mail.com')
 
-INSERT INTO roles(nombre) VALUES('ROLE_USER')
 INSERT INTO roles(nombre) VALUES('ROLE_ADMIN')
+INSERT INTO roles(nombre) VALUES('ROLE_USER')
 
 INSERT INTO usuarios_roles(usuario_id, role_id) VALUES(1, 1);
+INSERT INTO usuarios_roles(usuario_id, role_id) VALUES(1, 2);
 INSERT INTO usuarios_roles(usuario_id, role_id) VALUES(2, 2);
-INSERT INTO usuarios_roles(usuario_id, role_id) VALUES(2, 1);
+
+-- Populate tabla productos
+insert into productos (nombre, precio, created_at) values ('Container - Hngd Cll Blk 7x7x3', 18.04, NOW());
+insert into productos (nombre, precio, created_at) values ('Beer - Pilsner Urquell', 84.21, NOW());
+insert into productos (nombre, precio, created_at) values ('Shrimp - 16/20, Peeled Deviened', 74.27, NOW());
+insert into productos (nombre, precio, created_at) values ('Sobe - Berry Energy', 25.74, NOW());
+insert into productos (nombre, precio, created_at) values ('Tomatoes - Yellow Hot House', 57.26, NOW());
+insert into productos (nombre, precio, created_at) values ('Juice - Lagoon Mango', 63.89, NOW());
+insert into productos (nombre, precio, created_at) values ('Chicken - Whole Fryers', 24.9, NOW());
+insert into productos (nombre, precio, created_at) values ('Tart Shells - Sweet, 2', 95.63, NOW());
+insert into productos (nombre, precio, created_at) values ('Pork - Liver', 21.18, NOW());
+insert into productos (nombre, precio, created_at) values ('Food Colouring - Pink', 4.54, NOW());
+
+-- Creamos algunas facturas
+INSERT INTO facturas (descripcion, observacion, cliente_id, created_at) VALUES('Factura lista mercado', null, 1, NOW());
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(1,1,1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(2,1,4);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(1,1,5);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(1,1,7);
+
+INSERT INTO facturas (descripcion, observacion, cliente_id, created_at) VALUES('Factura una compra', 'Alguna nota importante!', 1, NOW());
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(3,2,6);

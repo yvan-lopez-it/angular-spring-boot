@@ -12,7 +12,7 @@ import { PaginatorComponent } from './core/components/paginator/paginator.compon
 import { ClienteService } from "./core/services/cliente.service";
 
 import { RouterModule, Routes } from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 
 import { registerLocaleData } from "@angular/common";
@@ -22,6 +22,11 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { DetalleComponent } from './core/components/clientes/detalle/detalle.component';
+import { LoginComponent } from './core/components/usuarios/login.component';
+import { AuthGuard } from "./core/guards/auth.guard";
+import { RoleGuard } from "./core/guards/role.guard";
+import { TokenInterceptor } from "./core/interceptors/token.interceptor";
+import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
 
 registerLocaleData(localeEs, 'es');
 
@@ -30,8 +35,9 @@ const routes: Routes = [
   { path: 'directivas', component: DirectivaComponent },
   { path: 'clientes', component: ClientesComponent },
   { path: 'clientes/page/:page', component: ClientesComponent },
-  { path: 'clientes/form', component: FormComponent },
-  { path: 'clientes/form/:id', component: FormComponent },
+  { path: 'clientes/form', component: FormComponent, canActivate: [ AuthGuard, RoleGuard ], data: { role: 'ROLE_ADMIN' } },
+  { path: 'clientes/form/:id', component: FormComponent, canActivate: [ AuthGuard, RoleGuard ], data: { role: 'ROLE_ADMIN' } },
+  { path: 'login', component: LoginComponent },
 ]
 
 @NgModule({
@@ -44,6 +50,7 @@ const routes: Routes = [
     FormComponent,
     PaginatorComponent,
     DetalleComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,9 @@ const routes: Routes = [
   ],
   providers: [
     ClienteService,
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es' },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [ AppComponent ]
 })

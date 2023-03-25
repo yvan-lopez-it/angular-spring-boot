@@ -21,7 +21,6 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarCliente();
-
     this.clienteService.getRegiones().subscribe(regiones => this.regiones = regiones);
   }
 

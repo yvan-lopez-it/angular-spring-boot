@@ -13,8 +13,8 @@
             <div class="row">
               <div class="col-sm">
 
-                <ul class="list-group text-dark mb-3"
-                    *ngIf="cliente">
+                <ul *ngIf="cliente"
+                    class="list-group text-dark mb-3">
                   <li class="list-group-item active">{{cliente.nombre}}</li>
                   <li class="list-group-item">{{cliente.apellido}}</li>
                   <li class="list-group-item">{{cliente.email}}</li>
@@ -22,12 +22,13 @@
                   <li class="list-group-item">{{ cliente.region.nombre }}</li>
                 </ul>
 
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
-                         aria-label="Upload"
-                         (change)="seleccionarFoto($event)">
-                  <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04"
-                          (click)="subirFoto()" [disabled]="!fotoSeleccionada">
+                <div *ngIf="authService.hasRole('ROLE_ADMIN')"
+                     class="input-group mb-3">
+                  <input (change)="seleccionarFoto($event)"
+                         type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                         aria-label="Upload"/>
+                  <button (click)="subirFoto()" [disabled]="!fotoSeleccionada"
+                          class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">
                     Subir
                   </button>
                 </div>
@@ -38,17 +39,17 @@
                    class="progress" role="progressbar" aria-label="Animated striped example"
                    aria-valuemin="0" aria-valuemax="100"
                    style="height: 40px">
-                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                     [ngStyle]="{width: progreso+'%'}">
+                <div [ngStyle]="{width: progreso+'%'}"
+                     class="progress-bar progress-bar-striped progress-bar-animated">
                   {{progreso}}
                 </div>
               </div>
 
 
               <div class="col-sm">
-                <img src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}"
-                     class="img-thumbnail rounded"
-                     *ngIf="cliente?.foto">
+                <img *ngIf="cliente?.foto"
+                     src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}"
+                     class="img-thumbnail rounded">
               </div>
             </div>
           </div>
