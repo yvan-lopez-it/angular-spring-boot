@@ -1,12 +1,12 @@
 -- Populate tabla clientes
-INSERT INTO regiones(id, nombre) VALUES (1,'Sudamérica');
-INSERT INTO regiones(id, nombre) VALUES (2,'Centroamérica');
-INSERT INTO regiones(id, nombre) VALUES (3,'Norteamérica');
+INSERT INTO regiones(id, nombre) VALUES (1,'Sudamerica');
+INSERT INTO regiones(id, nombre) VALUES (2,'Centroamerica');
+INSERT INTO regiones(id, nombre) VALUES (3,'Norteamerica');
 INSERT INTO regiones(id, nombre) VALUES (4,'Europa');
 INSERT INTO regiones(id, nombre) VALUES (5,'Asia');
-INSERT INTO regiones(id, nombre) VALUES (6,'África');
-INSERT INTO regiones(id, nombre) VALUES (7,'Oceanía');
-INSERT INTO regiones(id, nombre) VALUES (8,'Antártida');
+INSERT INTO regiones(id, nombre) VALUES (6,'Africa');
+INSERT INTO regiones(id, nombre) VALUES (7,'Oceania');
+INSERT INTO regiones(id, nombre) VALUES (8,'AntArtida');
 
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(1, 'Yvan', 'Lopez', 'yvan@mail.com', '2023-01-19');
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(2, 'Benjamin', 'Rivera', 'benjamin@mail.com', '2022-01-19');

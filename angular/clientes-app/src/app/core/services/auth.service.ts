@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Usuario } from "../models/usuario";
+import { UsuarioModel } from "../models/usuario.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private _usuario: Usuario;
+  private _usuario: UsuarioModel;
   private _token: string;
 
   constructor(private http: HttpClient) {
   }
 
-  public get usuario(): Usuario {
+  public get usuario(): UsuarioModel {
     if (this._usuario != null) {
       return this._usuario;
     } else if (this._usuario == null && sessionStorage.getItem('usuario')) {
-      this._usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
+      this._usuario = JSON.parse(sessionStorage.getItem('usuario')) as UsuarioModel;
       return this._usuario;
     }
 
-    return new Usuario();
+    return new UsuarioModel();
   }
 
   public get token(): string {
@@ -36,7 +36,7 @@ export class AuthService {
     return null;
   }
 
-  login(usuario: Usuario): Observable<any> {
+  login(usuario: UsuarioModel): Observable<any> {
     const urlEndpoint = 'http://localhost:8080/oauth/token';
     const credenciales = btoa('angularapp' + ':' + '12345');
     const httpHeaders = new HttpHeaders({
@@ -57,7 +57,7 @@ export class AuthService {
   guardarUsuario(accessToken: string): void {
     let payload = this.obtenerDatosToken(accessToken);
 
-    this._usuario = new Usuario();
+    this._usuario = new UsuarioModel();
     this._usuario.nombre = payload.nombre
     this._usuario.apellido = payload.apellido
     this._usuario.email = payload.email

@@ -20,7 +20,8 @@
            class="table table-bordered table-striped">
       <thead>
       <tr>
-        <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
+        <!--        <th *ngIf="authService.hasRole('ROLE_USER')">#</th>-->
+        <th>#</th>
         <th>nombre</th>
         <th>apeliido</th>
         <th>email</th>
@@ -31,7 +32,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let cliente of clientes">
-        <td *ngIf="authService.hasRole('ROLE_USER')">
+        <!--        <td *ngIf="authService.hasRole('ROLE_USER')">-->
+        <td>
           <img *ngIf="cliente?.foto"
                (click)="abrirModal(cliente)"
                src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}"

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from "../../models/usuario";
+import { UsuarioModel } from "../../models/usuario.model";
 import swal from 'sweetalert2';
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
@@ -11,10 +11,10 @@ import { Router } from "@angular/router";
 export class LoginComponent implements OnInit {
 
   titulo: string = 'Por favor inicia sesión!';
-  usuario: Usuario;
+  usuario: UsuarioModel;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.usuario = new Usuario();
+    this.usuario = new UsuarioModel();
   }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
         swal.fire('Login', `Hola ${ usuario.username }, has iniciado sesión con exito`, 'success');
       }, error: err => {
         if (err.status == 400) {
-          swal.fire('Error Login', 'Usuario o clave incorrecta.', 'error');
+          swal.fire('Error Login', 'UsuarioModel o clave incorrecta.', 'error');
         }
       }
     });
