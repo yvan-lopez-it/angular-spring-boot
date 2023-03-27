@@ -1,5 +1,6 @@
-package com.bolsadeideas.springboot.backend.apirest.models.entity;
+package com.bolsadeideas.springboot.backend.apirest.factura;
 
+import com.bolsadeideas.springboot.backend.apirest.cliente.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.ArrayList;

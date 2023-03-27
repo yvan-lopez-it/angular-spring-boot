@@ -1,4 +1,4 @@
-package com.bolsadeideas.springboot.backend.apirest.models.services;
+package com.bolsadeideas.springboot.backend.apirest.cliente;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

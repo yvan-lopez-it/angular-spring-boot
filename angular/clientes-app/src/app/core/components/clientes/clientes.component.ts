@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ClienteModel } from "../../models/cliente.model";
+import { ClienteModel } from '../../models/cliente.model';
 
-import { ClienteService } from "../../services/cliente.service";
-import Swal from "sweetalert2";
-import { tap } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
-import { ModalService } from "../../services/modal.service";
-import { AuthService } from "../../services/auth.service";
+import { ClienteService } from '../../services/cliente.service';
+import Swal from 'sweetalert2';
+import { tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { ModalService } from '../../services/modal.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-clientes',
@@ -35,7 +35,7 @@ export class ClientesComponent implements OnInit {
           this.clienteService.getClientes(page).pipe(
             //tap(clientes => this.clientes = clientes)
             tap(response => {
-              console.log("ClientesComponent: tap 3");
+              console.log('ClientesComponent: tap 3');
               (response.content as ClienteModel[]).forEach(cliente => console.log(cliente.nombre));
             })
           ).subscribe(response => {
@@ -51,7 +51,7 @@ export class ClientesComponent implements OnInit {
           clienteOriginal.foto = cliente.foto;
         }
         return clienteOriginal;
-      })
+      });
     });
 
   }
@@ -63,7 +63,7 @@ export class ClientesComponent implements OnInit {
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
+    });
 
     swalWithBootstrapButtons.fire({
       title: '¿Estás seguro?',
@@ -82,11 +82,11 @@ export class ClientesComponent implements OnInit {
               '¡ClienteModel eliminado!',
               `Cliente ${ cliente.nombre } eliminado con éxito`,
               'success'
-            )
+            );
           }
         );
       }
-    })
+    });
   }
 
   abrirModal(cliente: ClienteModel) {

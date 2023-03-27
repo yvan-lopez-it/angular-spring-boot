@@ -1,7 +1,5 @@
-package com.bolsadeideas.springboot.backend.apirest.models.services;
+package com.bolsadeideas.springboot.backend.apirest.usuario;
 
-import com.bolsadeideas.springboot.backend.apirest.models.dao.IUsuarioDao;
-import com.bolsadeideas.springboot.backend.apirest.models.entity.Usuario;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;

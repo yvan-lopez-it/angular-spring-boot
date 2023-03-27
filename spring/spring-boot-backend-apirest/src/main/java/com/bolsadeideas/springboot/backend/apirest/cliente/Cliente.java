@@ -1,5 +1,7 @@
-package com.bolsadeideas.springboot.backend.apirest.models.entity;
+package com.bolsadeideas.springboot.backend.apirest.cliente;
 
+import com.bolsadeideas.springboot.backend.apirest.factura.Factura;
+import com.bolsadeideas.springboot.backend.apirest.usuario.Region;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;

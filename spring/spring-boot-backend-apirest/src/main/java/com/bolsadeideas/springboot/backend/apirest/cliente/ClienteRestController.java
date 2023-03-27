@@ -1,9 +1,6 @@
-package com.bolsadeideas.springboot.backend.apirest.controllers;
+package com.bolsadeideas.springboot.backend.apirest.cliente;
 
-import com.bolsadeideas.springboot.backend.apirest.models.entity.Cliente;
-import com.bolsadeideas.springboot.backend.apirest.models.entity.Region;
-import com.bolsadeideas.springboot.backend.apirest.models.services.IClienteService;
-import com.bolsadeideas.springboot.backend.apirest.models.services.IUploadFileService;
+import com.bolsadeideas.springboot.backend.apirest.usuario.Region;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;

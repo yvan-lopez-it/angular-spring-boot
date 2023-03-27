@@ -1,7 +1,7 @@
 package com.bolsadeideas.springboot.backend.apirest.auth;
 
-import com.bolsadeideas.springboot.backend.apirest.models.entity.Usuario;
-import com.bolsadeideas.springboot.backend.apirest.models.services.IUsuarioService;
+import com.bolsadeideas.springboot.backend.apirest.usuario.Usuario;
+import com.bolsadeideas.springboot.backend.apirest.usuario.IUsuarioService;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

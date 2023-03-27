@@ -1,6 +1,5 @@
-package com.bolsadeideas.springboot.backend.apirest.models.dao;
+package com.bolsadeideas.springboot.backend.apirest.usuario;
 
-import com.bolsadeideas.springboot.backend.apirest.models.entity.Usuario;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

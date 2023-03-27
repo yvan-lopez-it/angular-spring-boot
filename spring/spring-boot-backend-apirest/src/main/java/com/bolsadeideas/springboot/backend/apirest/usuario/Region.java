@@ -1,4 +1,4 @@
-package com.bolsadeideas.springboot.backend.apirest.models.entity;
+package com.bolsadeideas.springboot.backend.apirest.usuario;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
