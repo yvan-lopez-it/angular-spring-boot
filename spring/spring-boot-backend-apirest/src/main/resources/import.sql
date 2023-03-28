@@ -1,14 +1,14 @@
 -- Populate tabla clientes
-INSERT INTO regiones(id, nombre) VALUES (1,'SudamÈrica');
-INSERT INTO regiones(id, nombre) VALUES (2,'CentroamÈrica');
-INSERT INTO regiones(id, nombre) VALUES (3,'NorteamÈrica');
+INSERT INTO regiones(id, nombre) VALUES (1,'Sudam√©rica');
+INSERT INTO regiones(id, nombre) VALUES (2,'Centroam√©rica');
+INSERT INTO regiones(id, nombre) VALUES (3,'Norteam√©rica');
 INSERT INTO regiones(id, nombre) VALUES (4,'Europa');
 INSERT INTO regiones(id, nombre) VALUES (5,'Asia');
 INSERT INTO regiones(id, nombre) VALUES (6,'Africa');
-INSERT INTO regiones(id, nombre) VALUES (7,'OceanÌa');
-INSERT INTO regiones(id, nombre) VALUES (8,'Ant·rtida');
+INSERT INTO regiones(id, nombre) VALUES (7,'Ocean√≠a');
+INSERT INTO regiones(id, nombre) VALUES (8,'Ant√°rtida');
 
-INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(1, 'Yv·n', 'LÛpez', 'yvan@mail.com', '2023-01-19');
+INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(1, 'Yv√°n', 'L√≥pez', 'yvan@mail.com', '2023-01-19');
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(2, 'Benjamin', 'Rivera', 'benjamin@mail.com', '2022-01-19');
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(3, 'Maritza', 'Tiburcio', 'maritza@mail.com', '2021-11-20');
 INSERT INTO clientes(region_id, nombre, apellido, email, created_at) VALUES(4, 'Fausto', 'De La Cruz', 'fausto@mail.com', '2020-10-18');
