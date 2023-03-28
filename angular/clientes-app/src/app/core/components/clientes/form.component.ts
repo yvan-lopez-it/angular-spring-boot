@@ -16,7 +16,9 @@ export class FormComponent implements OnInit {
   regiones: RegionModel[];
   public errores: string[];
 
-  constructor(private clienteService: ClienteService, private router: Router, private activateRoute: ActivatedRoute,) {
+  constructor(private clienteService: ClienteService,
+              private router: Router,
+              private activateRoute: ActivatedRoute,) {
   }
 
   ngOnInit(): void {

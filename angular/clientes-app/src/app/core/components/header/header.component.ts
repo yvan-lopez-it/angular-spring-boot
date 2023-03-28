@@ -1,16 +1,17 @@
-import { Component } from "@angular/core";
-import { AuthService } from "../../services/auth.service";
-import { Router } from "@angular/router";
-import swal from "sweetalert2";
+import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  title: string = 'App Angular'
+  title: string = 'App Angular';
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService,
+              private router: Router) {
   }
 
   logout(): void {
