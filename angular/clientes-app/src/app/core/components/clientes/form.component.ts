@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ClienteModel } from "../../models/cliente.model";
-import { ClienteService } from "../../services/cliente.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { ClienteModel } from '../../models/cliente.model';
+import { ClienteService } from '../../services/cliente.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
-import { RegionModel } from "../../models/region.model";
+import { RegionModel } from '../../models/region.model';
 
 @Component({
   selector: 'app-form',
@@ -27,7 +27,7 @@ export class FormComponent implements OnInit {
   cargarCliente(): void {
     this.activateRoute.params.subscribe(
       params => {
-        let id = params['id']
+        let id = params['id'];
         if (id) {
           this.clienteService.getCliente(id).subscribe(
             cliente => this.cliente = cliente
@@ -54,6 +54,7 @@ export class FormComponent implements OnInit {
 
   update(): void {
     console.log(this.cliente);
+    this.cliente.facturas = null;
     this.clienteService.update(this.cliente).subscribe({
       next: json => {
         this.router.navigate([ '/clientes' ]);
@@ -68,7 +69,7 @@ export class FormComponent implements OnInit {
   }
 
   compararRegion(o1: RegionModel, o2: RegionModel): boolean {
-    if(o1 === undefined && o2 === undefined){
+    if (o1 === undefined && o2 === undefined) {
       return true;
     }
     return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id === o2.id;

@@ -10,4 +10,12 @@ export class FacturaModel {
   cliente: ClienteModel;
   total: number;
   createdAt: string;
+
+  calcularGranTotal(): number {
+    this.total = 0;
+    this.items.forEach((item: ItemFacturaModel) => {
+      this.total += item.calcularImporte();
+    });
+    return this.total;
+  }
 }

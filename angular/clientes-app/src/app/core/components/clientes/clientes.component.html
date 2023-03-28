@@ -20,21 +20,19 @@
            class="table table-bordered table-striped">
       <thead>
       <tr>
-        <!--        <th *ngIf="authService.hasRole('ROLE_USER')">#</th>-->
-        <th>#</th>
+        <th *ngIf="authService.hasRole('ROLE_USER')">#</th>
         <th>nombre</th>
         <th>apeliido</th>
         <th>email</th>
         <th>fecha</th>
-        <th>crear factura</th>
+        <th *ngIf="authService.hasRole('ROLE_ADMIN')">crear factura</th>
         <th *ngIf="authService.hasRole('ROLE_ADMIN')">editar</th>
         <th *ngIf="authService.hasRole('ROLE_ADMIN')">eliminar</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let cliente of clientes">
-        <!--        <td *ngIf="authService.hasRole('ROLE_USER')">-->
-        <td>
+        <td *ngIf="authService.hasRole('ROLE_USER')">
           <img *ngIf="cliente?.foto"
                (click)="abrirModal(cliente)"
                src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}"
@@ -51,7 +49,7 @@
         <td>{{cliente.apellido | uppercase}}</td>
         <td>{{cliente.email}}</td>
         <td>{{cliente.createdAt | date: "EEE. dd, MMM yyyy"}}</td>
-        <td>
+        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
           <button [routerLink]="['/facturas/form', cliente.id]"
                   type="button" class="btn btn-success btn-sm"> Crear Factura
           </button>
